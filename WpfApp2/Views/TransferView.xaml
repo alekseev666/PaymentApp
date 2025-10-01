@@ -1,41 +1,51 @@
-﻿<UserControl x:Class="PaymentApp.Views.TransferView"
+﻿
+<UserControl x:Class="PaymentApp.Views.TransferView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid Margin="20">
-        <StackPanel Width="400">
-            <TextBlock Text="ПЕРЕВОД МЕЖДУ СЧЕТАМИ" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+    <ScrollViewer>
+        <Grid Margin="20">
+            <StackPanel Width="400">
+                <TextBlock Text="ПЕРЕВОД МЕЖДУ СЧЕТАМИ" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                <TextBlock Text="{Binding Accounts[0].Number}" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Accounts[0].Balance, StringFormat='Баланс: {0} руб.'}" Background="LightYellow" Padding="5"/>
 
-            <!-- БАЛАНСЫ -->
-            <TextBlock Text="{Binding Accounts[0].Balance, StringFormat='Счет 1: {0:C}'}" Background="LightYellow" Padding="5"/>
-            <TextBlock Text="{Binding Accounts[1].Balance, StringFormat='Счет 2: {0:C}'}" Background="LightYellow" Padding="5"/>
-            <TextBlock Text="{Binding Accounts[2].Balance, StringFormat='Счет 3: {0:C}'}" Background="LightYellow" Padding="5" Margin="0,0,0,10"/>
+                <TextBlock Text="{Binding Accounts[1].Number}" FontWeight="Bold" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding Accounts[1].Balance, StringFormat='Баланс: {0} руб.'}" Background="LightYellow" Padding="5"/>
 
-            <TextBlock Text="Счет отправителя:" Margin="0,10,0,5"/>
-            <ComboBox ItemsSource="{Binding Accounts}" 
+                <TextBlock Text="{Binding Accounts[2].Number}" FontWeight="Bold" Margin="0,5,0,0"/>
+                <TextBlock Text="{Binding Accounts[2].Balance, StringFormat='Баланс: {0} руб.'}" Background="LightYellow" Padding="5" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Счет отправителя:" Margin="0,10,0,5"/>
+                <ComboBox ItemsSource="{Binding Accounts}" 
                       DisplayMemberPath="Number"
                       SelectedItem="{Binding SelectedFromAccount}"/>
-
-            <TextBlock Text="Счет получателя:" Margin="0,10,0,5"/>
-            <ComboBox ItemsSource="{Binding Accounts}" 
+                <TextBlock Text="Счет получателя:" Margin="0,10,0,5"/>
+                <ComboBox ItemsSource="{Binding Accounts}" 
                       DisplayMemberPath="Number"
                       SelectedItem="{Binding SelectedToAccount}"/>
-
-            <TextBlock Text="Сумма перевода:" Margin="0,10,0,5"/>
-            <TextBox Text="{Binding TransferAmount}"/>
-
-            <Button Content="ВЫПОЛНИТЬ ПЕРЕВОД" 
+                <TextBlock Text="Сумма перевода:" Margin="0,10,0,5"/>
+                <TextBox Text="{Binding TransferAmount}"/>
+                <Button Content="ВЫПОЛНИТЬ ПЕРЕВОД" 
                     Command="{Binding ExecuteTransferCommand}"
                     Background="LightBlue" Margin="0,20,0,10" Padding="10"/>
+                <Button Content="КОНТРАКТ" 
+                    Command="{Binding ShowContractCommand}"
+                    Background="LightGoldenrodYellow" Margin="0,0,0,10" Padding="10"/>
+                <Border Background="Lavender" Padding="10" Margin="0,10">
+                    <TextBlock Text="{Binding ContractText}" TextWrapping="Wrap" FontFamily="Courier New"/>
+                </Border>
+                <Border Background="LightGray" Padding="10" Margin="0,10">
+                    <StackPanel>
+                        <TextBlock Text="СПЕЦИФИКАЦИЯ ОПЕРАЦИИ" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding PreConditionStatus, StringFormat='Предусловие: {0}'}" 
+           Foreground="{Binding PreConditionColor}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding PostConditionStatus, StringFormat='Постусловие: {0}'}" 
+           Foreground="{Binding PostConditionColor}" FontWeight="Bold" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
 
-            <Border Background="LightGray" Padding="10" Margin="0,10">
-                <StackPanel>
-                    <TextBlock Text="СПЕЦИФИКАЦИЯ ОПЕРАЦИИ" FontWeight="Bold" Margin="0,0,0,5"/>
-                    <TextBlock Text="{Binding PreConditionStatus, StringFormat='Предусловие: {0}'}"/>
-                    <TextBlock Text="{Binding PostConditionStatus, StringFormat='Постусловие: {0}'}" Margin="0,5,0,0"/>
-                </StackPanel>
-            </Border>
-
-            <TextBlock Text="{Binding OperationResultMessage}" FontWeight="Bold" Margin="0,10,0,0"/>
-        </StackPanel>
-    </Grid>
+                <TextBlock Text="{Binding OperationResultMessage}" FontWeight="Bold" Margin="0,10,0,0"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </UserControl>
