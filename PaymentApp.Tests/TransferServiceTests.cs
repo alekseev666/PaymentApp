@@ -1,12 +1,13 @@
 using PaymentApp.Models;
 using PaymentApp.Services.Impl;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PaymentApp.Tests;
 
+[TestClass]
 public class TransferServiceTests
 {
-	[Fact]
+	[TestMethod]
 	public void Transfer_Succeeds_WhenSufficientFundsOrOverdraft()
 	{
 		var from = new Account { Id = 1, Number = "1001", Owner = "A", Balance = 1000m, MaxOverdraft = 200m };
@@ -15,13 +16,13 @@ public class TransferServiceTests
 
 		var result = service.Transfer(from, to, 1100m);
 
-		Assert.True(result.IsSuccess);
-		Assert.Equal("Перевод выполнен успешно", result.Message);
-		Assert.Equal(-100m, from.Balance);
-		Assert.Equal(1400m, to.Balance);
+		Assert.IsTrue(result.IsSuccess);
+		Assert.AreEqual("Перевод выполнен успешно", result.Message);
+		Assert.AreEqual(-100m, from.Balance);
+		Assert.AreEqual(1400m, to.Balance);
 	}
 
-	[Fact]
+	[TestMethod]
 	public void Transfer_Fails_WhenInsufficientFundsBeyondOverdraft()
 	{
 		var from = new Account { Id = 1, Number = "1001", Owner = "A", Balance = 500m, MaxOverdraft = 100m };
@@ -30,10 +31,10 @@ public class TransferServiceTests
 
 		var result = service.Transfer(from, to, 700m);
 
-		Assert.False(result.IsSuccess);
-		Assert.Equal("Недостаточно средств для перевода", result.Message);
-		Assert.Equal(500m, from.Balance);
-		Assert.Equal(0m, to.Balance);
+		Assert.IsFalse(result.IsSuccess);
+		Assert.AreEqual("Недостаточно средств для перевода", result.Message);
+		Assert.AreEqual(500m, from.Balance);
+		Assert.AreEqual(0m, to.Balance);
 	}
 }
 
