@@ -26,6 +26,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private DepositViewModel _depositVM;
 
+    [ObservableProperty]
+    private HelpViewModel _HelpVM;
+
     /// <summary>
     /// Конструктор главной ViewModel
     /// Принимает сервисы и создает все дочерние ViewModel
@@ -39,5 +42,6 @@ public partial class MainViewModel : ObservableObject
         _transferVM = new TransferViewModel(transferService, accountService);
         _withdrawVM = new WithdrawViewModel(transferService, accountService);
         _depositVM = new DepositViewModel(transferService, accountService);
+        _HelpVM = new HelpViewModel();
     }
 }

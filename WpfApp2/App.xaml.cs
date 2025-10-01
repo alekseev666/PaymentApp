@@ -21,6 +21,8 @@ public partial class App : Application
         services.AddTransient<TransferViewModel>();
         services.AddTransient<WithdrawViewModel>();
         services.AddTransient<DepositViewModel>();
+        services.AddTransient<HelpViewModel>();
+
 
         var provider = services.BuildServiceProvider();
         Ioc.Default.ConfigureServices(provider);
