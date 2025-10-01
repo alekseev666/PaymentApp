@@ -18,4 +18,4 @@ WPF приложение для демонстрации банковских о
 ## Как запустить
 1. Клонируйте репозиторий:
 ```bash
-git clone <url-репозитория>
+git clone https://github.com/alekseev666/PaymentApp.git
